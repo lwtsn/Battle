@@ -93,13 +93,36 @@ contract PepemonCardOracle is AdminRole {
 
     function addBattleCard(BattleCardStats memory cardData) public onlyAdmin {
         require(battleCardStats[cardData.battleCardId].battleCardId == 0, "PepemonCard: BattleCard already exists");
-        battleCardStats[cardData.battleCardId]=cardData;
+
+        BattleCardStats storage _card = battleCardStats[cardData.battleCardId];
+        _card.battleCardId = cardData.battleCardId;
+        _card.battleCardType = cardData.battleCardType;
+        _card.name = cardData.name;
+        _card.hp = cardData.hp;
+        _card.spd = cardData.spd;
+        _card.inte = cardData.inte;
+        _card.def = cardData.def;
+        _card.atk = cardData.atk;
+        _card.sDef = cardData.sDef;
+        _card.sAtk = cardData.sAtk;
+
         emit BattleCardCreated(msg.sender, cardData.battleCardId);
     }
 
     function updateBattleCard(BattleCardStats memory cardData) public onlyAdmin {
         require(battleCardStats[cardData.battleCardId].battleCardId != 0, "PepemonCard: BattleCard not found");
-        battleCardStats[cardData.battleCardId]=cardData;
+
+        BattleCardStats storage _card = battleCardStats[cardData.battleCardId];
+        _card.hp = cardData.hp;
+        _card.battleCardType = cardData.battleCardType;
+        _card.name = cardData.name;
+        _card.spd = cardData.spd;
+        _card.inte = cardData.inte;
+        _card.def = cardData.def;
+        _card.atk = cardData.atk;
+        _card.sDef = cardData.sDef;
+        _card.sAtk = cardData.sAtk;
+
         emit BattleCardUpdated(msg.sender, cardData.battleCardId);
     }
 
@@ -110,13 +133,35 @@ contract PepemonCardOracle is AdminRole {
 
     function addSupportCard(SupportCardStats memory cardData) public onlyAdmin {
         require(supportCardStats[cardData.supportCardId].supportCardId == 0, "PepemonCard: SupportCard already exists");
-        supportCardStats[cardData.supportCardId]=cardData;
+
+        SupportCardStats storage _card = supportCardStats[cardData.supportCardId];
+        _card.supportCardId = cardData.supportCardId;
+        _card.supportCardType = cardData.supportCardType;
+        _card.name = cardData.name;
+        for (uint256 i = 0; i < cardData.effectOnes.length; i++) {
+            _card.effectOnes.push(cardData.effectOnes[i]);
+        }
+        _card.effectMany = cardData.effectMany;
+        _card.unstackable = cardData.unstackable;
+        _card.unresettable = cardData.unresettable;
+
         emit SupportCardCreated(msg.sender, cardData.supportCardId);
     }
 
     function updateSupportCard(SupportCardStats memory cardData) public onlyAdmin {
         require(supportCardStats[cardData.supportCardId].supportCardId != 0, "PepemonCard: SupportCard not found");
-        supportCardStats[cardData.supportCardId]=cardData;
+
+        SupportCardStats storage _card = supportCardStats[cardData.supportCardId];
+        _card.supportCardId = cardData.supportCardId;
+        _card.supportCardType = cardData.supportCardType;
+        _card.name = cardData.name;
+        for (uint256 i = 0; i < cardData.effectOnes.length; i++) {
+            _card.effectOnes.push(cardData.effectOnes[i]);
+        }
+        _card.effectMany = cardData.effectMany;
+        _card.unstackable = cardData.unstackable;
+        _card.unresettable = cardData.unresettable;
+
         emit SupportCardUpdated(msg.sender, cardData.supportCardId);
     }
 

@@ -131,7 +131,7 @@ contract PepemonBattle is AdminRole {
         PepemonCardOracle.BattleCardStats memory p1BattleCard = _cardContract.getBattleCardById(p1BattleCardId);
         PepemonCardOracle.BattleCardStats memory p2BattleCard = _cardContract.getBattleCardById(p2BattleCardId);
 
-        Battle memory newBattle;
+        Battle storage newBattle;
         // Initiate battle ID
         newBattle.battleId = _nextBattleId;
         // Initiate player1
